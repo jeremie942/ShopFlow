@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
 #include "type.h"
 
 
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
+    strcpy(b->nom,"ShopFlow");
     b->capaciteProduits = 10;
     b->produits = (Produit *)malloc(b->capaciteProduits * sizeof(Produit));
     if (b->produits == NULL) { /* ... gestion d'erreur ... */ }
@@ -33,27 +33,27 @@ void initialiserDonneesTest(Boutique *b) {
     Client modelo[] = {
         {1, "Pierre", "Jean", "pierre.jean@gmail.com", "0765854987",
             {"1 rue Victor Hugo", "Paris", "75001", "France"},
-            0, 0, 0, {}, 1},
+            0, 0, 0, NULL, 1},
 
         {2, "Martin", "Sophie", "sophie.martin@gmail.com", "0612345678",
             {"12 avenue des Fleurs", "Lyon", "69000", "France"},
-            0, 0, 0, {}, 1},
+            0, 0, 0, NULL, 1},
 
         {3, "Durand", "Lucas", "lucas.durand@gmail.com", "0623456789",
             {"8 rue du Port", "Marseille", "13000", "France"},
-            0, 0, 0, {}, 1},
+            0, 0, 0, NULL, 1},
 
         {4, "Bernard", "Emma", "emma.bernard@gmail.com", "0634567890",
             {"15 boulevard Central", "Toulouse", "31000", "France"},
-            0, 0, 0, {}, 1},
+            0, 0, 0, NULL, 1},
 
         {5, "Petit", "Nathan", "nathan.petit@gmail.com", "0645678901",
             {"22 rue des Écoles", "Nantes", "44000", "France"},
-            0, 0, 0, {}, 1},
+            0, 0, 0, NULL, 1},
 
         {6, "Robert", "Julie", "julie.robert@gmail.com", "0656789012",
             {"5 place de la Gare", "Lille", "59000", "France"},
-            0, 0, 0, {}, 1}
+            0, 0, 0, NULL, 1}
     };
     for (int j = 0;j < 8; j++)
         b->clients[b->nbClients++] = modelo[j];
@@ -75,7 +75,7 @@ void afficherBoutique(Boutique *b)
 {
     printf("Nom: %s\n",b->nom);
     for (int i=0; i<b->nbProduits; i++) {
-        printf("Produit %d : reference: %s, designation: %s, categorie: %s, prix: %f, quantite: %d, suil d'alerte: %d, actif: %d\n",i,b->produits[i].reference,b->produits[i].designation,b->produits[i].categorie,b->produits[i].prixUnitaireHT,b->produits[i].quantiteStock,b->produits[i].sueilAlerte,b->produits[i].actif);
+        printf("Produit %d : reference: %s, designation: %s, categorie: %s, prix: %.2f, quantite: %d, suil d'alerte: %d, actif: %d\n",i,b->produits[i].reference,b->produits[i].designation,b->produits[i].categorie,b->produits[i].prixUnitaireHT,b->produits[i].quantiteStock,b->produits[i].sueilAlerte,b->produits[i].actif);
     }
     printf("nb produit: %d\n",b->nbProduits);
     printf("capacite produits: %d\n",b->capaciteProduits);
