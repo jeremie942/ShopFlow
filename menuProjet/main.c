@@ -40,7 +40,7 @@ static int lireChoix(void)
  * A REMPLACER par les vraies fonctions des modules au fil des seances.
  * ========================================================================== */
 
-/* --- Module PRODUITS ------------------------------------------------------ */
+/* ----------------------------------------------------- */
 void ajouterProduit(void)      { printf("  [STUB] ajouterProduit - a implementer dans produit.c\n"); }
 void modifierProduit(void)     { printf("  [STUB] modifierProduit - a implementer dans produit.c\n"); }
 void supprimerProduit(void)    { printf("  [STUB] supprimerProduit - a implementer dans produit.c\n"); }
