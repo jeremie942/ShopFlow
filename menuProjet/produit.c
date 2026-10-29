@@ -1,12 +1,11 @@
-
-#include <stdio.h>
 #include "produit.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include "type.h"
 #include <string.h>
 
 void ajouterProduit(Boutique *bout) {
-    if (bout->capaciteProduit > bout->nbProduits) {
+    if (bout->capaciteProduits > bout->nbProduits) {
         char ref[12];
         char des[60];
         char cat[30];
@@ -18,30 +17,38 @@ void ajouterProduit(Boutique *bout) {
 
         do {
             test = 0;
-            printf("Quel est la référence ?\n");
-            scanf("%s",&ref);
+            printf("Quel est la reference ?\n");
+            fgets(ref, sizeof(ref), stdin);
+            des[strcspn(ref, "\n")] = '\0';
             for (int i = 0; i < bout->nbProduits; i++) {
-                if (ref == bout->produits[i].reference) {
+                if (strcmp(ref, bout->produits[i].reference) == 0){
                     test = 1;
-                    printf("la référence est déja assigné, veuillez en donner une autre\n");
+                    printf("la reference est deja assigne, veuillez en donner une autre\n");
                 }
             }
         }while (test == 1);
-        printf("Appelation du produit ?\n");
-        scanf("%s",&des);
-        printf("Quel est la catégorie ?\n");
-        scanf("%s",&cat);
-        printf("Quel est le prix a l'unité ?\n");
-        scanf("%d",&prix);
-        printf("Quel est la quantité actuelle ?\n");
-        scanf("%d",&qStock);
-        printf("Quel est le seuil de réapprovisionnement ?\n");
-        scanf("%d",&sAlert);
-        printf("Est-ce un produit actif ?\n");
-        scanf("%d",&act);
+
+        printf("Appellation du produit ?\n");
+        fgets(des, sizeof(des), stdin);
+        des[strcspn(des, "\n")] = '\0';
+
+        printf("Quelle est la categorie ?\n");
+        fgets(cat, sizeof(cat), stdin);
+        des[strcspn(des, "\n")] = '\0';
+        printf("Quel est le prix a l'unite ?\n");
+        scanf(" %f", &prix);
+
+        printf("Quelle est la quantite actuelle ?\n");
+        scanf(" %d", &qStock);
+
+        printf("Quel est le seuil de reapprovisionnement ?\n");
+        scanf(" %d", &sAlert);
+
+        printf("Produit actif ? (0 ou 1)\n");
+        scanf(" %d", &act);
 
         strcpy(bout->produits[bout->nbProduits].reference,ref);
-        strcpy(bout->produits[bout->nbProduits].designation,res);
+        strcpy(bout->produits[bout->nbProduits].designation,des);
         strcpy(bout->produits[bout->nbProduits].categorie,cat);
         bout->produits[bout->nbProduits].prixUnitaireHT=prix;
         bout->produits[bout->nbProduits].quantiteStock = qStock;
