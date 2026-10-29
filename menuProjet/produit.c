@@ -5,7 +5,10 @@
 #include <string.h>
 
 void ajouterProduit(Boutique *bout) {
-    if (bout->capaciteProduits > bout->nbProduits) {
+    if (bout->capaciteProduits <= bout->nbProduits) {
+        bout->produits=realloc(bout->produits, (bout->nbProduits+1)*sizeof(Produit));
+        bout->capaciteProduits++;
+    }
         char ref[12];
         char des[60];
         char cat[30];
@@ -55,8 +58,5 @@ void ajouterProduit(Boutique *bout) {
         bout->produits[bout->nbProduits].sueilAlerte = sAlert;
         bout->produits[bout->nbProduits].actif = act;
         bout->nbProduits++;
-    }
-    else {
 
-    }
 }

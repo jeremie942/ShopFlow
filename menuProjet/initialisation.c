@@ -9,7 +9,7 @@
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
     strcpy(b->nom,"ShopFlow");
-    b->capaciteProduits = 10;
+    b->capaciteProduits = 8;
     b->produits = (Produit *)malloc(b->capaciteProduits * sizeof(Produit));
     if (b->produits == NULL) { /* ... gestion d'erreur ... */ }
     b->nbProduits = 0;
