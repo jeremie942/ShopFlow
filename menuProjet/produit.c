@@ -56,4 +56,7 @@ void ajouterProduit(Boutique *bout) {
         bout->produits[bout->nbProduits].actif = act;
         bout->nbProduits++;
     }
+    else {
+
+    }
 }
