@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "type.h"
 
+#include "type.h"
+#include "produit.h"
 
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
@@ -75,7 +76,7 @@ void afficherBoutique(Boutique *b)
 {
     printf("Nom: %s\n",b->nom);
     for (int i=0; i<b->nbProduits; i++) {
-        printf("Produit %d : reference: %s, designation: %s, categorie: %s, prix: %.2f, quantite: %d, suil d'alerte: %d, actif: %d\n",i,b->produits[i].reference,b->produits[i].designation,b->produits[i].categorie,b->produits[i].prixUnitaireHT,b->produits[i].quantiteStock,b->produits[i].sueilAlerte,b->produits[i].actif);
+        printf("Produit %d : reference: %s, designation: %s, categorie: %s, prix: %f, quantite: %d, suil d'alerte: %d, actif: %d\n",i,b->produits[i].reference,b->produits[i].designation,b->produits[i].categorie,b->produits[i].prixUnitaireHT,b->produits[i].quantiteStock,b->produits[i].sueilAlerte,b->produits[i].actif);
     }
     printf("nb produit: %d\n",b->nbProduits);
     printf("capacite produits: %d\n",b->capaciteProduits);
@@ -93,6 +94,9 @@ int main()
 {
     Boutique b;
     initialiserDonneesTest(&b);
+    afficherBoutique(&b);
+    printf("test");
+    ajouterProduit(&b);
     afficherBoutique(&b);
     return 0;
 }
