@@ -1,5 +1,7 @@
-//
-// Created by Jérémie on 29/10/2026.
-//
+#include "commandes.h"
+#include
 
-#include "../commandes.h"
+void creerCommande(Boutique boutique)
+{
+
+}
