@@ -1,24 +1,43 @@
 #include <stdio.h>
+#include "client.h"
 
-Type    
+void ajouterClient (Boutique *b) {
+    boutique-> nbclients++;
+}
 
-Typedef struct
-{
+void mettreaJourClient (Boutique *b) {
+    printf ("modifer les coordonnées :", Adresse);
+    scanf( "%adresse", &boutique->coordinate);
 
-    int idClient;
-    char nom[50];
-    char Prenom[50];
-    char email[50];
-    char telephone[15];
-    Adresse adresse;
-    int pointsFidelite;
-    int nbCommandes;
-    int capaciteCommandes;
+    for (int i=0; i < boutique->nbclients; i++) {
+        if (boutique-> clients[i].idClient) {
+            client = &boutique->clients[i];
+            break;
+        }
 
-}client;
+    }
+if (client == NULL) {
+    printf("client introuvable");
+    return;
+}
+    printf("Nouveau nom = ");
 
-int main (void) {
+return 0;
 
 }
+void supprimerClient (Boutique boutique) {
+    
+
+
+
+}
+
+
+
+
+
+
+
+
 
 
