@@ -187,7 +187,6 @@ void afficherBoutique(Boutique *b)
             }
         }
     }
-
     printf("\n\n=========== STATISTIQUES ===========\n");
     printf("Nombre clients    : %d\n", b->nbClients);
     printf("Capacite clients  : %d\n", b->capaciteClients);

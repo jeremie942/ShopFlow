@@ -1,4 +1,3 @@
-
 #ifndef SHOPFLOW_COMMANDES_H
 #define SHOPFLOW_COMMANDES_H
 #include "type.h"
