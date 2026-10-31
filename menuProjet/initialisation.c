@@ -202,5 +202,8 @@ int main()
     initialiserDonneesTest(&b);
     searchProduit(&b);
 
+    afficherBoutique(&b);
+    creerCommande(&b);
+    afficherBoutique(&b);
     return 0;
 }
