@@ -202,7 +202,7 @@ int main()
     initialiserDonneesTest(&b);
     afficherBoutique(&b);
     modifierProduit(&b);
-    changerStatut(&b, 601);
+
     afficherBoutique(&b);
     return 0;
 }

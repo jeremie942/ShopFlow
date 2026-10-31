@@ -29,11 +29,11 @@ void ajouterLigne(Boutique *b, int num_commande) {
                     realloc(nv_cmd->lignes, sizeof(LigneCommande)*nv_cmd->nbLignes+1);
                 }
                 strcpy(nv_cmd->lignes[nv_cmd->nbLignes].refProduit, b->produits[i].reference);
-                strcpy(nv_cmd.lignes[nv_cmd.nbLignes].designation, b->produits[i].designation);
-                nv_cmd.lignes[nv_cmd.nbLignes].quantite = nb;
-                nv_cmd.lignes[nv_cmd.nbLignes].prixUnitaireHT = b->produits[i].prixUnitaireHT;
-                nv_cmd.lignes[nv_cmd.nbLignes].sousTotalHT = b->produits[i].prixUnitaireHT*nb;
-                nv_cmd.nbLignes++;
+                strcpy(nv_cmd->lignes[nv_cmd->nbLignes].designation, b->produits[i].designation);
+                nv_cmd->lignes[nv_cmd->nbLignes].quantite = nb;
+                nv_cmd->lignes[nv_cmd->nbLignes].prixUnitaireHT = b->produits[i].prixUnitaireHT;
+                nv_cmd->lignes[nv_cmd->nbLignes].sousTotalHT = b->produits[i].prixUnitaireHT*nb;
+                nv_cmd->nbLignes++;
                 printf("Votre article a bien été ajouter à voitre commande.");
             }
         }

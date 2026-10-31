@@ -70,19 +70,15 @@ void modifierProduit(Boutique *bout) {
 
     // Vider le buffer si un scanf précédent a laissé un \n (sécurité)
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-
     fgets(ref, sizeof(ref), stdin);
     ref[strcspn(ref, "\n")] = '\0'; // Supprimer le saut de ligne
-
     for (int i = 0; i < bout->nbProduits; i++) {
         if (strcmp(bout->produits[i].reference, ref) == 0) {
             index = i;
             break;
         }
     }
-
-    if (index != -1) {
+    if (index == -1) {
         printf("[!] Aucun produit ne possede la reference : %s\n", ref);
         return;
     }
