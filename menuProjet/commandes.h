@@ -5,9 +5,9 @@
 #include "commandes.c"
 
 void creerCommande(Boutique *b);
-void ajouterLigne();
-void supprimerLigne();
-void changerStatut();
+void ajouterLigne(Boutique *b, int num_commande);
+void supprimerLigne(Boutique *b, int num_commande);
+void changerStatut(Boutique *b, int num_commande);
 void annulerCommande();
 void afficherCommande();
 

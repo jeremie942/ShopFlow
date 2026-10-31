@@ -203,6 +203,7 @@ int main()
     initialiserDonneesTest(&b);
     afficherBoutique(&b);
     creerCommande(&b);
+    changerStatut(&b, 601);
     afficherBoutique(&b);
     return 0;
 }

@@ -40,7 +40,7 @@ void creerCommande(Boutique *b) {
         nv_commande->nbLignes = 0;
         nv_commande->capaciteLignes = 5;
         nv_commande->lignes = (LigneCommande*) malloc(sizeof(LigneCommande)*nv_commande->capaciteLignes);
-        // Initialisation des prix remsies etc...
+        // Initialisation des prix, remsies etc...
         nv_commande->montantBrutHT = 0;
         nv_commande->tauxRemise = 0;
         nv_commande->montantRemise = 0;
@@ -54,9 +54,27 @@ void creerCommande(Boutique *b) {
         strcpy(nv_commande->adresseLivraison.codePostal,  b->clients[i].adresse.codePostal);
         strcpy(nv_commande->adresseLivraison.pays,  b->clients[i].adresse.pays);
         printf("Une commande vide à bien été créer pour %s %s", b->clients[i].nom, b->clients[i].prenom);
-
         b->clients[i].nbCommandes++;
     } else {
         printf("L'id que vous avez rentrer est invalide");
     }
 }
+
+void changerStatut(Boutique *b, int num_commande)
+    {
+        int client = num_commande / 100 - 1;
+        int commande = num_commande % 100 - 1;
+
+        if (strcmp(b->clients[client].commandes[commande].statut,
+                   "EN_COURS") == 0)
+        {
+            strcpy(b->clients[client].commandes[commande].statut,
+                   "EXPEDIEE");
+        }
+        else if (strcmp(b->clients[client].commandes[commande].statut,
+                        "EXPEDIEE") == 0)
+        {
+            strcpy(b->clients[client].commandes[commande].statut,
+                   "LIVREE");
+        }
+    }
