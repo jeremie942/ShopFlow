@@ -62,8 +62,18 @@ void ajouter_Produit(Boutique *bout) {
 }
 
 
-void modifierProduit(Boutique *bout, const char *ref) {
+void modifierProduit(Boutique *bout) {
     int index = -1;
+    char ref[12];
+
+    printf("Entrez la reference du produit a modifier : ");
+
+    // Vider le buffer si un scanf précédent a laissé un \n (sécurité)
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    fgets(ref, sizeof(ref), stdin);
+    ref[strcspn(ref, "\n")] = '\0'; // Supprimer le saut de ligne
 
     for (int i = 0; i < bout->nbProduits; i++) {
         if (strcmp(bout->produits[i].reference, ref) == 0) {
