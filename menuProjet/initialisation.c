@@ -201,7 +201,7 @@ int main()
     Boutique b;
     initialiserDonneesTest(&b);
     afficherBoutique(&b);
-    creerCommande(&b);
+    modifierProduit(&b);
     changerStatut(&b, 601);
     afficherBoutique(&b);
     return 0;

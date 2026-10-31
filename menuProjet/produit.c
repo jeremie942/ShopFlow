@@ -4,7 +4,7 @@
 #include "type.h"
 #include <string.h>
 
-void ajouterProduit(Boutique *bout) {
+void ajouter_Produit(Boutique *bout) {
     if (bout->capaciteProduits <= bout->nbProduits) {
         bout->produits=realloc(bout->produits, (bout->nbProduits+1)*sizeof(Produit));
         bout->capaciteProduits++;
@@ -59,4 +59,44 @@ void ajouterProduit(Boutique *bout) {
         bout->produits[bout->nbProduits].actif = act;
         bout->nbProduits++;
 
+}
+
+
+void modifierProduit(Boutique *bout) {
+    int index = -1;
+    char ref[12];
+
+    printf("Entrez la reference du produit a modifier : ");
+
+    // Vider le buffer si un scanf précédent a laissé un \n (sécurité)
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+
+    fgets(ref, sizeof(ref), stdin);
+    ref[strcspn(ref, "\n")] = '\0'; // Supprimer le saut de ligne
+
+    for (int i = 0; i < bout->nbProduits; i++) {
+        if (strcmp(bout->produits[i].reference, ref) == 0) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index != -1) {
+        printf("[!] Aucun produit ne possede la reference : %s\n", ref);
+        return;
+    }
+
+    printf("\n--- Modification du produit : %s ---\n",bout->produits[index].designation);
+
+    printf("Prix unitaire HT actuel (%.2f) - Nouveau prix : ", bout->produits[index].prixUnitaireHT);
+    scanf(" %f", &bout->produits[index].prixUnitaireHT);
+
+    printf("Quantite en stock actuelle (%d) - Nouvelle quantite : ", bout->produits[index].quantiteStock);
+    scanf(" %d", &bout->produits[index].quantiteStock);
+
+    printf("Seuil d'alerte actuel (%d) - Nouveau seuil : ", bout->produits[index].sueilAlerte);
+    scanf(" %d", &bout->produits[index].sueilAlerte);
+
+    printf("[+] Produit modifie avec succes !\n");
 }
