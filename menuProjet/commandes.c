@@ -13,6 +13,7 @@ void ajouterLigne(Boutique *b, int num_commande) {
     printf("Veuillez entrez l'objet que vous voulez acheter: ");
     char des[60];
     int trouve=0,nb=0;
+    getchar();
     fgets(des, sizeof(des), stdin);
     des[strcspn(des, "\n")] = '\0';
     for (int i=0; i<b->nbProduits; i++) {
@@ -23,9 +24,11 @@ void ajouterLigne(Boutique *b, int num_commande) {
             {
                 printf("Combient en voulez vous en acheter? (max: %d): ",b->produits[i].quantiteStock);
                 scanf("%d", &nb);
-            } while (nb > b->produits[i].quantiteStock || nb ==0);
+                printf("test %d",nb);
+            } while (nb > b->produits[i].quantiteStock || nb == 0);
             if (nb != 0) {
-                if (nv_cmd->capaciteLignes >= nv_cmd->nbLignes) {
+                if (nv_cmd->capaciteLignes <= nv_cmd->nbLignes)
+                {
                     realloc(nv_cmd->lignes, sizeof(LigneCommande)*nv_cmd->nbLignes+1);
                 }
                 strcpy(nv_cmd->lignes[nv_cmd->nbLignes].refProduit, b->produits[i].reference);
@@ -78,19 +81,17 @@ void creerCommande(Boutique *b) {
         // Ajout des lignes pour la nouvelle commande
         nv_commande->nbLignes = 0;
         nv_commande->capaciteLignes = 5;
+        nv_commande->lignes = (LigneCommande*) malloc(sizeof(LigneCommande)*nv_commande->capaciteLignes);
         int fin=0;
         do
         {
-            printf("Pour ajouter un produit à votre liste entrez 1 sinon 0: ");
+            printf("Pour ajouter un produit a votre liste entrez 1 sinon 0: ");
             scanf(" %d", &fin);
             if (fin == 1)
             {
-                printf("test0");
-                ajouterLigne(b, id);
-                printf("test");
+                ajouterLigne(b, nv_commande->idClient*100 + b->clients[i].nbCommandes + 1);
             }
         }while (fin == 1);
-        nv_commande->lignes = (LigneCommande*) malloc(sizeof(LigneCommande)*nv_commande->capaciteLignes);
         // Initialisation des prix, remsies etc...
         nv_commande->montantBrutHT = 0;
         nv_commande->tauxRemise = 0;
