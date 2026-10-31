@@ -121,8 +121,6 @@ void searchProduit(Boutique *bout) {
 
     printf("Veuillez saisir la reference ou le nom meme partiel du produit : \n");
 
-    int c;
-
     if (fgets(ele, sizeof(ele), stdin) == NULL) {
         return;
     }
