@@ -22,22 +22,22 @@ void ajouterLigne(Boutique *b, int num_commande) {
             trouve=1;
             do
             {
-                printf("Combient en voulez vous en acheter? (max: %d): ",b->produits[i].quantiteStock);
+                printf("Combien en voulez vous en acheter? (max: %d): ",b->produits[i].quantiteStock);
                 scanf("%d", &nb);
-                printf("test %d",nb);
             } while (nb > b->produits[i].quantiteStock || nb == 0);
             if (nb != 0) {
                 if (nv_cmd->capaciteLignes <= nv_cmd->nbLignes)
                 {
-                    realloc(nv_cmd->lignes, sizeof(LigneCommande)*nv_cmd->nbLignes+1);
+                    nv_cmd->lignes = realloc(nv_cmd->lignes, sizeof(LigneCommande)*nv_cmd->nbLignes+1);
                 }
                 strcpy(nv_cmd->lignes[nv_cmd->nbLignes].refProduit, b->produits[i].reference);
                 strcpy(nv_cmd->lignes[nv_cmd->nbLignes].designation, b->produits[i].designation);
                 nv_cmd->lignes[nv_cmd->nbLignes].quantite = nb;
+                b->produits[i].quantiteStock-= nb;
                 nv_cmd->lignes[nv_cmd->nbLignes].prixUnitaireHT = b->produits[i].prixUnitaireHT;
                 nv_cmd->lignes[nv_cmd->nbLignes].sousTotalHT = b->produits[i].prixUnitaireHT*nb;
                 nv_cmd->nbLignes++;
-                printf("Votre article a bien été ajouter à voitre commande.");
+                printf("Votre article a bien ete ajouter a voitre commande.\n");
             }
         }
     }
@@ -45,6 +45,33 @@ void ajouterLigne(Boutique *b, int num_commande) {
     {
         printf("Le produit que vous avez demander n'existe pas.");
     }
+}
+
+void supprimerLigne(Boutique *b, int num_commande, char des[60]) {
+    int client = num_commande / 100 - 1;
+    int commande = num_commande % 100 - 1;
+    int indice=-1;
+    Commande *cmd = &b->clients[client].commandes[commande];
+    for (int j=0; j< cmd->nbLignes;j++)
+    {
+        if (strcmp(cmd->lignes[j].designation,des) == 0)
+        {
+            indice = j;
+            break;
+        }
+    }
+    if (indice == -1)
+    {
+        printf("Produit introuvable\n");
+        return;
+    }
+    int i=indice;
+    b->produits[i].quantiteStock+=cmd->lignes[i].quantite;
+    for (i; i < cmd->nbLignes-1 ; i++)
+    {
+        cmd->lignes[i] = cmd->lignes[i+1];
+    }
+    cmd->nbLignes--;
 }
 
 void creerCommande(Boutique *b) {
@@ -85,13 +112,22 @@ void creerCommande(Boutique *b) {
         int fin=0;
         do
         {
-            printf("Pour ajouter un produit a votre liste entrez 1 sinon 0: ");
+            printf("Pour ajouter un produit a votre liste entrez 1, pour suprimer un produit 2 sinon 0: ");
             scanf(" %d", &fin);
             if (fin == 1)
             {
                 ajouterLigne(b, nv_commande->idClient*100 + b->clients[i].nbCommandes + 1);
             }
-        }while (fin == 1);
+            if (fin == 2)
+            {
+                printf("Quel produit voulez vous retirer de la liste: ");
+                getchar();
+                char des[60];
+                fgets(des, sizeof(des), stdin);
+                des[strcspn(des, "\n")] = '\0';
+                supprimerLigne(b, nv_commande->idClient*100 + b->clients[i].nbCommandes + 1, des);
+            }
+        }while (fin == 1 || fin == 2);
         // Initialisation des prix, remsies etc...
         nv_commande->montantBrutHT = 0;
         nv_commande->tauxRemise = 0;
