@@ -76,5 +76,4 @@ typedef struct {
     int idClientSuivant;
 } Boutique;
 
-
 #endif //SHOPFLOW_TYPE_H

@@ -4,4 +4,5 @@
 #include "type.h"
 
 void ajouterProduit(Boutique *bout);
+void modifierProduit(Boutique *bout);
 #endif //SHOPFLOW_PRODUIT_H

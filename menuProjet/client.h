@@ -1,6 +1,3 @@
-
-
-
 #ifndef ALGORITHME_CLIENT_H
 #define ALGORITHME_CLIENT_H
 #include "type.h"
