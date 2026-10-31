@@ -200,9 +200,7 @@ int main()
 {
     Boutique b;
     initialiserDonneesTest(&b);
-    afficherBoutique(&b);
-    modifierProduit(&b);
+    searchProduit(&b);
 
-    afficherBoutique(&b);
     return 0;
 }
