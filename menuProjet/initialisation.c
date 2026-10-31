@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
 #include "type.h"
 #include "produit.h"
+#include "commandes.h"
 
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
@@ -34,7 +34,7 @@ void initialiserDonneesTest(Boutique *b) {
     Client modelo[] = {
         {1, "Pierre", "Jean", "pierre.jean@gmail.com", "0765854987",
             {"1 rue Victor Hugo", "Paris", "75001", "France"},
-            0, 0, 0, NULL, 1},
+            0, 0, 5, NULL, 1},
 
         {2, "Martin", "Sophie", "sophie.martin@gmail.com", "0612345678",
             {"12 avenue des Fleurs", "Lyon", "69000", "France"},
@@ -71,23 +71,130 @@ void detruireBoutique(Boutique *b)
     free(b->clients);
 }
 
-
 void afficherBoutique(Boutique *b)
 {
-    printf("Nom: %s\n",b->nom);
-    for (int i=0; i<b->nbProduits; i++) {
-        printf("Produit %d : reference: %s, designation: %s, categorie: %s, prix: %.2f, quantite: %d, suil d'alerte: %d, actif: %d\n",i,b->produits[i].reference,b->produits[i].designation,b->produits[i].categorie,b->produits[i].prixUnitaireHT,b->produits[i].quantiteStock,b->produits[i].sueilAlerte,b->produits[i].actif);
-    }
-    printf("nb produit: %d\n",b->nbProduits);
-    printf("capacite produits: %d\n",b->capaciteProduits);
+    printf("\n=====================================\n");
+    printf("          BOUTIQUE %s\n", b->nom);
+    printf("=====================================\n");
 
-    for (int j=0; j<b->capaciteProduits; j++) {
-        printf("id: %d, nom: %s, prenom: %s, email: %s, telephone: %s, Adresse rue: %s, ville: %s, code: %s, pays: %s, point de fidelite: %d, nb commandes: %d, capacite commande: %d, commandes: a faire plus tard, actif: %d\n",b->clients[j].idClient,b->clients[j].nom,b->clients[j].prenom,b->clients[j].email,b->clients[j].telephone,b->clients[j].adresse.rue,b->clients[j].adresse.ville,b->clients[j].adresse.codePostal,b->clients[j].adresse.pays,b->clients[j].pointsFidelite,b->clients[j].nbCommandes,b->clients[j].actif);
+    printf("\nNombre de produits : %d\n", b->nbProduits);
+    printf("Capacite produits  : %d\n", b->capaciteProduits);
+
+    printf("\n=========== PRODUITS ===========\n");
+
+    for (int i = 0; i < b->nbProduits; i++)
+    {
+        Produit *p = &b->produits[i];
+
+        printf("\nProduit %d\n", i + 1);
+        printf("  Reference      : %s\n", p->reference);
+        printf("  Designation    : %s\n", p->designation);
+        printf("  Categorie      : %s\n", p->categorie);
+        printf("  Prix HT        : %.2f €\n", p->prixUnitaireHT);
+        printf("  Stock          : %d\n", p->quantiteStock);
+        printf("  Seuil alerte   : %d\n", p->sueilAlerte);
+        printf("  Actif          : %s\n",
+               p->actif ? "Oui" : "Non");
     }
-    printf("nb client: %d\n",b->nbClients);
-    printf("capacite client: %d\n",b->capaciteClients);
-    printf("numero suivant: %d\n",b->numeroSuivant);
-    printf("id client suivant: %d\n",b->idClientSuivant);
+
+    printf("\n\n=========== CLIENTS ===========\n");
+
+    for (int i = 0; i < b->nbClients; i++)
+    {
+        Client *c = &b->clients[i];
+
+        printf("\n=====================================\n");
+        printf("Client #%d\n", c->idClient);
+        printf("=====================================\n");
+
+        printf("Nom               : %s\n", c->nom);
+        printf("Prenom            : %s\n", c->prenom);
+        printf("Email             : %s\n", c->email);
+        printf("Telephone         : %s\n", c->telephone);
+
+        printf("Adresse :\n");
+        printf("  Rue             : %s\n", c->adresse.rue);
+        printf("  Ville           : %s\n", c->adresse.ville);
+        printf("  Code postal     : %s\n", c->adresse.codePostal);
+        printf("  Pays            : %s\n", c->adresse.pays);
+
+        printf("Points fidelite   : %d\n", c->pointsFidelite);
+        printf("Nb commandes      : %d\n", c->nbCommandes);
+        printf("Capacite commande : %d\n", c->capaciteCommandes);
+        printf("Actif             : %s\n",
+               c->actif ? "Oui" : "Non");
+
+        printf("\n------ COMMANDES ------\n");
+
+        if (c->nbCommandes == 0)
+        {
+            printf("Aucune commande.\n");
+        }
+        else
+        {
+            for (int j = 0; j < c->nbCommandes; j++)
+            {
+                Commande *cmd = &c->commandes[j];
+
+                printf("\n-------------------------------------\n");
+                printf("Commande %d\n", j + 1);
+                printf("-------------------------------------\n");
+
+                printf("Numero            : %d\n", cmd->numero);
+                printf("ID Client         : %d\n", cmd->idClient);
+
+                printf("Date              : %02d/%02d/%04d\n",
+                       cmd->dateCommande.jour,
+                       cmd->dateCommande.mois,
+                       cmd->dateCommande.annee);
+
+                printf("Statut            : %s\n", cmd->statut);
+
+                printf("Montant brut HT   : %.2f \n", cmd->montantBrutHT);
+                printf("Taux remise       : %.2f %%\n", cmd->tauxRemise);
+                printf("Montant remise    : %.2f \n", cmd->montantRemise);
+                printf("Montant HT        : %.2f \n", cmd->montantHT);
+                printf("Montant TVA       : %.2f \n", cmd->montantTVA);
+                printf("Montant TTC       : %.2f \n", cmd->montantTTC);
+                printf("Frais de port     : %.2f \n", cmd->fraisPort);
+
+                printf("\nAdresse livraison :\n");
+                printf("  Rue             : %s\n", cmd->adresseLivraison.rue);
+                printf("  Ville           : %s\n", cmd->adresseLivraison.ville);
+                printf("  Code postal     : %s\n", cmd->adresseLivraison.codePostal);
+                printf("  Pays            : %s\n", cmd->adresseLivraison.pays);
+
+                printf("\nLignes de commande : %d\n", cmd->nbLignes);
+
+                if (cmd->nbLignes == 0)
+                {
+                    printf("  Aucune ligne.\n");
+                }
+                else
+                {
+                    for (int k = 0; k < cmd->nbLignes; k++)
+                    {
+                        LigneCommande *ligne = &cmd->lignes[k];
+
+                        printf("\n  Ligne %d\n", k + 1);
+                        printf("    Reference     : %s\n", ligne->refProduit);
+                        printf("    Designation   : %s\n", ligne->designation);
+                        printf("    Quantite      : %d\n", ligne->quantite);
+                        printf("    Prix HT       : %.2f €\n", ligne->prixUnitaireHT);
+                        printf("    Sous-total HT : %.2f €\n", ligne->sousTotalHT);
+                    }
+                }
+            }
+        }
+    }
+
+    printf("\n\n=========== STATISTIQUES ===========\n");
+    printf("Nombre clients    : %d\n", b->nbClients);
+    printf("Capacite clients  : %d\n", b->capaciteClients);
+    printf("Numero suivant    : %d\n", b->numeroSuivant);
+    printf("ID suivant client : %d\n", b->idClientSuivant);
+    printf("=====================================\n");
+
 }
 
 int main()
@@ -95,8 +202,7 @@ int main()
     Boutique b;
     initialiserDonneesTest(&b);
     afficherBoutique(&b);
-    printf("test");
-    ajouterProduit(&b);
+    creerCommande(&b);
     afficherBoutique(&b);
     return 0;
 }
