@@ -92,25 +92,78 @@ void mettreaJourClient (Boutique *b) {
 
 void supprimerClient (Boutique *boutique) {
     int id;
-    printf("Id du client à supprimer");
+    printf("Id du client à supprimer: ");
     scanf("%d", &id);
 
-    for (int i = 0; int id <- nbClients) {}
+    for (int i = 0; i < b->nbClients; i++) {
+        if (b->clients[i].idClient == id) {
+            free(b->clients[i].commandes);
 
-}
-void afficherListe (Boutique *boutique) {
-        for (int i = 0; i < boutique->nbClients; i++) {
-            if (boutique->clients[i].actif) {
-                printf("%s %s\n",
-                       boutique->clients[i].prenom,
-                       boutique->clients[i].nom);
+            for (int j = i; j < b->nbClients - 1; j++) {
+                b->clients[j] = b->clients[j + 1];
             }
+            b->nbClients--;
+
+            printf("Client supprime\n");
+            return;
         }
     }
+
+    printf("Erreur : le client n'existe pas\n");
 }
-void afficherClient (Boutique *);
-      for (int i = 0; i < boutique->nbClients; i++) {}
-    if
+void afficherListe (Boutique *boutique) {
+    if (boutique->nbClients == 0) {
+        printf("Aucun client dans la boutique\n");
+        return;
+    }
+
+    for (int i = 0; i < boutique->nbClients; i++) {
+        printf("Client %d : %s %s\n",
+               boutique->clients[i].idClient,
+               boutique->clients[i].prenom,
+               boutique->clients[i].nom);
+        printf("  Email : %s\n", boutique->clients[i].email);
+        printf("  Telephone : %s\n", boutique->clients[i].telephone);
+        printf("  Adresse : %s, %s %s, %s\n",
+               boutique->clients[i].adresse.rue,
+               boutique->clients[i].adresse.codePostal,
+               boutique->clients[i].adresse.ville,
+               boutique->clients[i].adresse.pays);
+    }
+}
+}
+
+void afficherClient (Boutique *boutique) {
+    int id;
+    printf("Id du client a afficher : ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < boutique->nbClients; i++) {
+        if (boutique->clients[i].idClient == id) {
+            Client *c = &boutique->clients[i];
+
+            printf("Client %d : %s %s\n", c->idClient, c->prenom, c->nom);
+            printf("  Email : %s\n", c->email);
+            printf("  Telephone : %s\n", c->telephone);
+            printf("  Adresse : %s, %s %s, %s\n",
+                   c->adresse.rue,
+                   c->adresse.codePostal,
+                   c->adresse.ville,
+                   c->adresse.pays);
+            printf("  Points de fidelite : %d\n", c->pointsFidelite);
+            printf("  Nombre de commandes : %d\n", c->nbCommandes);
+            if (c->actif == 1) {
+                printf("  Statut : actif\n");
+            } else {
+                printf("  Statut : inactif\n");
+            }
+            return;
+        }
+    }
+
+    printf("Erreur : le client n'existe pas\n");
+}
+
 
 
 
