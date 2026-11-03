@@ -1,13 +1,14 @@
 #ifndef SHOPFLOW_COMMANDES_H
 #define SHOPFLOW_COMMANDES_H
-#include "type.h"
 #include "commandes.c"
+#include "type.h"
+#include "produit.h"
 
-void creerCommande(Boutique *b); // ne pas oublier d'afficher les produits avant chaque ajout de nouveau produits --> plus lisible
 void ajouterLigne(Boutique *b, int num_commande);
 void supprimerLigne(Boutique *b, int num_commande, char des[60]);
+void creerCommande(Boutique *b);
 void changerStatut(Boutique *b, int num_commande);
-void annulerCommande();
-void afficherCommande();
+void afficherCommande(Boutique *b, int num_commande);
+void annulerCommande(Boutique *b, int num_commande);
 
 #endif //SHOPFLOW_COMMANDES_H

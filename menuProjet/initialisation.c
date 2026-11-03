@@ -90,7 +90,7 @@ void afficherBoutique(Boutique *b)
         printf("  Reference      : %s\n", p->reference);
         printf("  Designation    : %s\n", p->designation);
         printf("  Categorie      : %s\n", p->categorie);
-        printf("  Prix HT        : %.2f €\n", p->prixUnitaireHT);
+        printf("  Prix HT        : %.2f\n", p->prixUnitaireHT);
         printf("  Stock          : %d\n", p->quantiteStock);
         printf("  Seuil alerte   : %d\n", p->sueilAlerte);
         printf("  Actif          : %s\n",
@@ -180,8 +180,8 @@ void afficherBoutique(Boutique *b)
                         printf("    Reference     : %s\n", ligne->refProduit);
                         printf("    Designation   : %s\n", ligne->designation);
                         printf("    Quantite      : %d\n", ligne->quantite);
-                        printf("    Prix HT       : %.2f €\n", ligne->prixUnitaireHT);
-                        printf("    Sous-total HT : %.2f €\n", ligne->sousTotalHT);
+                        printf("    Prix HT       : %.2f\n", ligne->prixUnitaireHT);
+                        printf("    Sous-total HT : %.2f\n", ligne->sousTotalHT);
                     }
                 }
             }
@@ -200,10 +200,10 @@ int main()
 {
     Boutique b;
     initialiserDonneesTest(&b);
-    searchProduit(&b);
-
     afficherBoutique(&b);
     creerCommande(&b);
+    annulerCommande(&b, 601);
+    afficherCommande(&b, 601);
     afficherBoutique(&b);
     return 0;
 }
