@@ -141,7 +141,6 @@ void searchProduit(Boutique *bout) {
         len--;
     }
 
-
     for (int i = 0; i < bout->nbProduits; i++) {
 
         if ((strcmp(bout->produits[i].reference, ele) == 0) ||
