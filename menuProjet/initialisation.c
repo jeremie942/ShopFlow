@@ -253,3 +253,11 @@ void afficherBoutique(Boutique *b)
     printf("=====================================\n");
 
 }
+
+void main(void) {
+    Boutique b;
+    initialiserDonneesTest(&b);
+    afficherBoutique(&b);
+    rechercheMultiCriteres(&b);
+
+}
