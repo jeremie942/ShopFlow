@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "type.h"
+#include "produit.h"
 #include "commandes.h"
 #include "statistique.h"
 #include "initialisation.h"
@@ -44,11 +45,6 @@ static int lireChoix(void)
  * A REMPLACER par les vraies fonctions des modules au fil des seances.
  * ========================================================================== */
 
-/* ----------------------------------------------------- */
-void ajouterProduit2(void)      { printf("  [STUB] ajouterProduit - a implementer dans produit.c\n"); }
-void modifierProduit2(void)     { printf("  [STUB] modifierProduit - a implementer dans produit.c\n"); }
-void supprimerProduit2(void)    { printf("  [STUB] supprimerProduit - a implementer dans produit.c\n"); }
-void afficherCatalogue2(void)   { printf("  [STUB] afficherCatalogue - a implementer dans produit.c\n"); }
 
 /* --- Module CLIENTS ------------------------------------------------------- */
 void ajouterClient2(void)       { printf("  [STUB] ajouterClient - a implementer dans client.c\n"); }
@@ -61,7 +57,7 @@ void afficherListeClients2(void){ printf("  [STUB] afficherListeClients - a impl
  * Pour ajouter une fonctionnalite : un printf + un case + la borne max.
  * ========================================================================== */
 
-static void menuProduits(void)
+static void menuProduits(Boutique *b)
 {
     int choix;
     do
@@ -76,11 +72,12 @@ static void menuProduits(void)
 
         switch (choix)
         {
-            case 1: ajouterProduit2();    break;
-            case 2: modifierProduit2();   break;
-            case 3: supprimerProduit2();  break;
-            case 4: afficherCatalogue2(); break;
-            case 0:                      break; /* retour automatique */
+            case 1: ajouterProduit(b);    break;
+            case 2: modifierProduit(b);   break;
+            case 3: supprimerProduit(b);  break;
+            case 4: afficherCatalogue(b); break;
+            case 5: searchProduit(b);     break;
+            case 0:                       break; /* retour automatique */
             default: printf("  [!] Choix invalide.\n"); break;
         }
     } while (choix != 0);
@@ -182,7 +179,7 @@ int main(void)
 
         switch (choix)
         {
-            case 1: menuProduits();     break;
+            case 1: menuProduits(&b);     break;
             case 2: menuClients();      break;
             case 3: menuCommandes(&b);    break;
             case 4: menuStatistiques(&b); break;
