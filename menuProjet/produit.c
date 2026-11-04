@@ -149,3 +149,21 @@ void searchProduit(Boutique *bout) {
     }
 }
 
+void supprimerProduit2(Boutique *bout) {
+    char ref[12];
+    printf("Reference du produit a supprimer (ex: PRD-0001) :");
+    scanf("%s", &ref);
+
+    for (int i = 0; i < bout->nbProduits; i++) {
+        if (bout->produits[i].reference == ref) {
+
+            for (int j = i; j < bout->nbProduits - 1; j++) {
+                bout->produits[j] = bout->produits[j + 1];
+            }
+            bout->nbProduits--;
+
+            printf("Produit supprime\n");
+            return;
+        }
+    }
+}
