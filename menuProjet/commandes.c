@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "historique.h"
 
 
 void ajouterLigne(Boutique *b, int num_commande)
@@ -151,6 +152,9 @@ void creerCommande(Boutique *b) {
         strcpy(nv_commande->adresseLivraison.ville,  b->clients[i].adresse.ville);
         strcpy(nv_commande->adresseLivraison.codePostal,  b->clients[i].adresse.codePostal);
         strcpy(nv_commande->adresseLivraison.pays,  b->clients[i].adresse.pays);
+        char description[100];
+        snprintf(description, sizeof(description), "Nom: %s, Prenom: %s", b->clients[i].nom, b->clients[i].prenom);
+        ajouterOperation(b, "Nouvelle commande de ", description);
         printf("Une commande a bien ete creer pour %s %s", b->clients[i].nom, b->clients[i].prenom);
         b->clients[i].nbCommandes++;
     } else {
@@ -166,6 +170,9 @@ void changerStatut(Boutique *b, int num_commande) {
     }else if (strcmp(b->clients[client].commandes[commande].statut, "EXPEDIEE") == 0) {
         strcpy(b->clients[client].commandes[commande].statut,"LIVREE");
     }
+    char description[100];
+    snprintf(description, sizeof(description), "La commande %d devient ", b->clients[client].commandes[commande].numero, b->clients[client].commandes[commande].statut);
+    ajouterOperation(b, "Changement de statut", description);
 }
 
 
@@ -223,7 +230,6 @@ void annulerCommande(Boutique *b, int num_commande) {
     int id = num_commande / 100 - 1;
     int commande = num_commande % 100 - 1;
     Commande *cmd = &b->clients[id].commandes[commande];
-
     if (strcmp(cmd->statut, "EN_COURS") == 0) {
         for (int i = 0; i < cmd->nbLignes; i++) {
             for (int j = 0; j < b->nbProduits; j++) {
@@ -247,6 +253,9 @@ void annulerCommande(Boutique *b, int num_commande) {
         cmd->nbLignes = 0;
         cmd->capaciteLignes = 0;
         strcpy(cmd->statut, "ANNULEE");
+        char description[100];
+        snprintf(description, sizeof(description), "La commande %d a ete annule", b->clients[id].commandes[commande].numero);
+        ajouterOperation(b, "Commande annuler", description);
         printf("Votre commande a bien ete annulee\n");
     }
     else
