@@ -202,8 +202,6 @@ int main()
     initialiserDonneesTest(&b);
     afficherBoutique(&b);
     creerCommande(&b);
-    annulerCommande(&b, 601);
-    afficherCommande(&b, 601);
-    afficherBoutique(&b);
+    afficherBoutique
     return 0;
 }

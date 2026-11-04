@@ -1,6 +1,5 @@
 #include "type.h"
 #include "commandes.h"
-#include "produit.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -103,7 +102,7 @@ void creerCommande(Boutique *b) {
         nv_commande->lignes = (LigneCommande*) malloc(sizeof(LigneCommande) * nv_commande->capaciteLignes);
         int fin = 0;
         do {
-            afficherCatalogue(b);
+            //afficherCatalogue(b);
             printf("Pour ajouter un produit a votre liste entrez 1, pour suprimer un produit 2 sinon 0: ");
             scanf(" %d", &fin);
             if (fin == 1) {
