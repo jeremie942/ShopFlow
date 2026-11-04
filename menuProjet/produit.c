@@ -22,7 +22,7 @@ void ajouterProduit(Boutique *bout) {
 
         do {
             test = 0;
-            printf("Quel est la reference ?\n");
+            printf("Quel est la reference ?(Ex : PRD-0000)\n");
             getchar();
             fgets(ref, sizeof(ref), stdin);
             des[strcspn(ref, "\n")] = '\0';
