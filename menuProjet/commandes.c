@@ -1,15 +1,17 @@
 #include "type.h"
-#include "commandes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
 
-void ajouterLigne(Boutique *b, int num_commande) {
+void ajouterLigne(Boutique *b, int num_commande)
+{
     int client = num_commande / 100 - 1;
     int commande = num_commande % 100 - 1;
     Commande *nv_cmd = &b->clients[client].commandes[commande];
+    // Vérification que la commande soit bien en cours.
+    if (strcmp(nv_cmd->statut, "EN_COURS") == 0) {
     // afficherCatalogue(&b);
     printf("Veuillez entrez l'objet que vous voulez acheter: ");
     char des[60];
@@ -36,12 +38,15 @@ void ajouterLigne(Boutique *b, int num_commande) {
                 nv_cmd->lignes[nv_cmd->nbLignes].sousTotalHT = b->produits[i].prixUnitaireHT * nb;
                 nv_cmd->nbLignes++;
                 printf("Votre article a bien ete ajouter a votre commande.\n");
+            } else {
+                printf("L'article n'a pas ete ajouter a votre commande.");
             }
         }
     }
     if (trouve == 0) {
         printf("Le produit que vous avez demander n'existe pas.");
     }
+} else {printf("Le commande est actuellement %s",nv_cmd->statut);}
 }
 
 void supprimerLigne(Boutique *b, int num_commande, char des[60]) {
@@ -49,21 +54,24 @@ void supprimerLigne(Boutique *b, int num_commande, char des[60]) {
     int commande = num_commande % 100 - 1;
     int indice = -1;
     Commande *cmd = &b->clients[client].commandes[commande];
-    for (int j = 0; j < cmd->nbLignes; j++) {
-        if (strcmp(cmd->lignes[j].designation, des) == 0) {
-            indice = j;
-            break;
+    if (strcmp(cmd->statut, "EN_COURS") == 0)
+    {
+        for (int j = 0; j < cmd->nbLignes; j++) {
+            if (strcmp(cmd->lignes[j].designation, des) == 0) {
+                indice = j;
+                break;
+            }
         }
-    }
-    if (indice == -1) {
-        printf("Produit introuvable\n");
-        return;
-    }
-    b->produits[indice].quantiteStock += cmd->lignes[indice].quantite;
-    for (int i = indice; i < cmd->nbLignes-1 ; i++) {
-        cmd->lignes[i] = cmd->lignes[i+1];
-    }
-    cmd->nbLignes--;
+        if (indice == -1) {
+            printf("Produit introuvable\n");
+            return;
+        }
+        b->produits[indice].quantiteStock += cmd->lignes[indice].quantite;
+        for (int i = indice; i < cmd->nbLignes-1 ; i++) {
+            cmd->lignes[i] = cmd->lignes[i+1];
+        }
+        cmd->nbLignes--;
+    } else {printf("Votre commande est actuellement %s",cmd->statut);}
 }
 
 void creerCommande(Boutique *b) {
@@ -138,7 +146,6 @@ void creerCommande(Boutique *b) {
             nv_commande->fraisPort = 0;
         } else {nv_commande->fraisPort = 5.90;}
         nv_commande->montantTTC = nv_commande->montantHT + nv_commande->montantTVA + nv_commande->fraisPort;
-
         // Adresse de livraison
         strcpy(nv_commande->adresseLivraison.rue,  b->clients[i].adresse.rue);
         strcpy(nv_commande->adresseLivraison.ville,  b->clients[i].adresse.ville);
@@ -162,24 +169,23 @@ void changerStatut(Boutique *b, int num_commande) {
 }
 
 
-void afficherCommande(Boutique *b, int num_commande) {
+void afficherCommande(Boutique *b) {
+    int num_commande;
+    printf("Veuillez entrer le numero de la commande que vous voulez voir: ");
+    scanf("%d", &num_commande);
     int id = num_commande / 100 - 1;
     int commande = num_commande % 100 - 1;
     Commande *cmd = b->clients[id].commandes;
     printf("\n-------------------------------------\n");
     printf("Commande %d\n", commande + 1);
     printf("-------------------------------------\n");
-
     printf("Numero            : %d\n", cmd->numero);
     printf("ID Client         : %d\n", cmd->idClient);
-
     printf("Date              : %02d/%02d/%04d\n",
     cmd->dateCommande.jour,
     cmd->dateCommande.mois,
     cmd->dateCommande.annee);
-
     printf("Statut            : %s\n", cmd->statut);
-
     printf("Montant brut HT   : %.2f \n", cmd->montantBrutHT);
     printf("Taux remise       : %.2f %%\n", cmd->tauxRemise);
     printf("Montant remise    : %.2f \n", cmd->montantRemise);
@@ -187,13 +193,11 @@ void afficherCommande(Boutique *b, int num_commande) {
     printf("Montant TVA       : %.2f \n", cmd->montantTVA);
     printf("Montant TTC       : %.2f \n", cmd->montantTTC);
     printf("Frais de port     : %.2f \n", cmd->fraisPort);
-
     printf("\nAdresse livraison :\n");
     printf("  Rue             : %s\n", cmd->adresseLivraison.rue);
     printf("  Ville           : %s\n", cmd->adresseLivraison.ville);
     printf("  Code postal     : %s\n", cmd->adresseLivraison.codePostal);
     printf("  Pays            : %s\n", cmd->adresseLivraison.pays);
-
     printf("\nLignes de commande : %d\n", cmd->nbLignes);
 
     if (cmd->nbLignes == 0)
@@ -205,7 +209,6 @@ void afficherCommande(Boutique *b, int num_commande) {
         for (int k = 0; k < cmd->nbLignes; k++)
         {
             LigneCommande *ligne = &cmd->lignes[k];
-
             printf("\n  Ligne %d\n", k + 1);
             printf("    Reference     : %s\n", ligne->refProduit);
             printf("    Designation   : %s\n", ligne->designation);

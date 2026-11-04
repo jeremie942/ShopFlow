@@ -5,6 +5,7 @@
 #include "type.h"
 #include "produit.h"
 #include "commandes.h"
+#include "client.h"
 
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
@@ -196,14 +197,3 @@ void afficherBoutique(Boutique *b)
 
 }
 
-int main()
-{
-    Boutique b;
-    initialiserDonneesTest(&b);
-    afficherBoutique(&b);
-    creerCommande(&b);
-    annulerCommande(&b, 601);
-    afficherCommande(&b, 601);
-    afficherBoutique(&b);
-    return 0;
-}

@@ -23,7 +23,7 @@ void ajouterClient (Boutique *b) {
     }
 
     Client c;
-    c.idClient = b->idClientSuivant;
+    c.idClient = b->nbClients+1;
 
     printf("Nom : ");
     scanf("%49s", c.nom);
@@ -90,9 +90,9 @@ void mettreaJourClient (Boutique *b) {
     printf("Erreur : le client n'existe pas\n");
 }
 
-void supprimerClient (Boutique *boutique) {
+void supprimerClient (Boutique *b) {
     int id;
-    printf("Id du client à supprimer: ");
+    printf("Id du client a supprimer: ");
     scanf("%d", &id);
 
     for (int i = 0; i < b->nbClients; i++) {
@@ -131,7 +131,7 @@ void afficherListe (Boutique *boutique) {
                boutique->clients[i].adresse.pays);
     }
 }
-}
+
 
 void afficherClient (Boutique *boutique) {
     int id;
@@ -160,13 +160,5 @@ void afficherClient (Boutique *boutique) {
             return;
         }
     }
-
     printf("Erreur : le client n'existe pas\n");
 }
-
-
-
-
-
-
-
