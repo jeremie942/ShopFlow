@@ -22,6 +22,7 @@ void ajouterProduit(Boutique *bout) {
         do {
             test = 0;
             printf("Quel est la reference ?\n");
+            getchar();
             fgets(ref, sizeof(ref), stdin);
             des[strcspn(ref, "\n")] = '\0';
             for (int i = 0; i < bout->nbProduits; i++) {
@@ -70,6 +71,7 @@ void modifierProduit(Boutique *bout) {
     printf("Entrez la reference du produit a modifier : ");
 
     int c;
+    getchar();
     fgets(ref, sizeof(ref), stdin);
     ref[strcspn(ref, "\n")] = '\0'; // Supprimer le saut de ligne
     for (int i = 0; i < bout->nbProduits; i++) {
@@ -106,7 +108,7 @@ void afficherCatalogue(Boutique *bout) {
         printf("  Reference      : %s\n", p->reference);
         printf("  Designation    : %s\n", p->designation);
         printf("  Categorie      : %s\n", p->categorie);
-        printf("  Prix HT        : %.2f €\n", p->prixUnitaireHT);
+        printf("  Prix HT        : %.2f\n", p->prixUnitaireHT);
         printf("  Stock          : %d\n", p->quantiteStock);
         printf("  Seuil alerte   : %d\n", p->sueilAlerte);
         printf("  Actif          : %s\n",
@@ -120,7 +122,7 @@ void searchProduit(Boutique *bout) {
     int trouve = 0;
 
     printf("Veuillez saisir la reference ou le nom meme partiel du produit : \n");
-
+    getchar();
     if (fgets(ele, sizeof(ele), stdin) == NULL) {
         return;
     }
@@ -149,3 +151,21 @@ void searchProduit(Boutique *bout) {
     }
 }
 
+void supprimerProduit(Boutique *bout) {
+    char ref[12];
+    printf("Reference du produit a supprimer (ex: PRD-0001) :");
+    scanf("%11s", &ref);
+
+    for (int i = 0; i < bout->nbProduits; i++) {
+        if (strcmp(bout->produits[i].reference,ref) == 0) {
+
+            for (int j = i; j < bout->nbProduits - 1; j++) {
+                bout->produits[j] = bout->produits[j + 1];
+            }
+            bout->nbProduits--;
+
+            printf("Produit supprime\n");
+            return;
+        }
+    }
+}

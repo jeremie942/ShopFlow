@@ -23,7 +23,7 @@ void ajouterClient (Boutique *b) {
     }
 
     Client c;
-    c.idClient = b->idClientSuivant;
+    c.idClient = b->nbClients+1;
 
     printf("Nom : ");
     scanf("%49s", c.nom);
@@ -90,9 +90,9 @@ void mettreaJourClient (Boutique *b) {
     printf("Erreur : le client n'existe pas\n");
 }
 
-void supprimerClient (Boutique *boutique) {
+void supprimerClient (Boutique *b) {
     int id;
-    printf("Id du client à supprimer: ");
+    printf("Id du client a supprimer: ");
     scanf("%d", &id);
 
     for (int i = 0; i < b->nbClients; i++) {
@@ -100,15 +100,14 @@ void supprimerClient (Boutique *boutique) {
             free(b->clients[i].commandes);
 
             for (int j = i; j < b->nbClients - 1; j++) {
+                b->clients[j+1].idClient--;
                 b->clients[j] = b->clients[j + 1];
             }
             b->nbClients--;
-
             printf("Client supprime\n");
             return;
         }
     }
-
     printf("Erreur : le client n'existe pas\n");
 }
 void afficherListe (Boutique *boutique) {
@@ -129,8 +128,13 @@ void afficherListe (Boutique *boutique) {
                boutique->clients[i].adresse.codePostal,
                boutique->clients[i].adresse.ville,
                boutique->clients[i].adresse.pays);
+        int somme = 0;
+        for (int j = 0; j < boutique->clients[i].nbCommandes; j++)
+        {
+            somme+= boutique->clients[i].commandes[j].montantHT;
+        }
+        printf("Chiffre d'afaire genere par le client: %d euros \n\n",somme);
     }
-}
 }
 
 void afficherClient (Boutique *boutique) {
@@ -141,7 +145,6 @@ void afficherClient (Boutique *boutique) {
     for (int i = 0; i < boutique->nbClients; i++) {
         if (boutique->clients[i].idClient == id) {
             Client *c = &boutique->clients[i];
-
             printf("Client %d : %s %s\n", c->idClient, c->prenom, c->nom);
             printf("  Email : %s\n", c->email);
             printf("  Telephone : %s\n", c->telephone);
@@ -157,16 +160,54 @@ void afficherClient (Boutique *boutique) {
             } else {
                 printf("  Statut : inactif\n");
             }
-            return;
+            if (c->nbCommandes == 0) {
+                break;
+            }
+            else {
+                for (int j = 0; j < c->nbCommandes; j++) {
+                    Commande *cmd = &c->commandes[j];
+                    printf("Commande %d\n", j + 1);
+                    printf("Numero            : %d\n", cmd->numero);
+                    printf("ID Client         : %d\n", cmd->idClient);
+                    printf("Date              : %02d/%02d/%04d\n",
+                           cmd->dateCommande.jour,
+                           cmd->dateCommande.mois,
+                           cmd->dateCommande.annee);
+
+                    printf("Statut            : %s\n", cmd->statut);
+                    printf("Montant brut HT   : %.2f \n", cmd->montantBrutHT);
+                    printf("Taux remise       : %.2f %%\n", cmd->tauxRemise);
+                    printf("Montant remise    : %.2f \n", cmd->montantRemise);
+                    printf("Montant HT        : %.2f \n", cmd->montantHT);
+                    printf("Montant TVA       : %.2f \n", cmd->montantTVA);
+                    printf("Montant TTC       : %.2f \n", cmd->montantTTC);
+                    printf("Frais de port     : %.2f \n", cmd->fraisPort);
+                    printf("\nAdresse livraison :\n");
+                    printf("  Rue             : %s\n", cmd->adresseLivraison.rue);
+                    printf("  Ville           : %s\n", cmd->adresseLivraison.ville);
+                    printf("  Code postal     : %s\n", cmd->adresseLivraison.codePostal);
+                    printf("  Pays            : %s\n", cmd->adresseLivraison.pays);
+                    printf("\nLignes de commande : %d\n", cmd->nbLignes);
+
+                    if (cmd->nbLignes == 0) {
+                        printf("  Aucune ligne.\n");
+                    }
+                    else {
+                        for (int k = 0; k < cmd->nbLignes; k++) {
+                            LigneCommande *ligne = &cmd->lignes[k];
+
+                            printf("\n  Ligne %d\n", k + 1);
+                            printf("    Reference     : %s\n", ligne->refProduit);
+                            printf("    Designation   : %s\n", ligne->designation);
+                            printf("    Quantite      : %d\n", ligne->quantite);
+                            printf("    Prix HT       : %.2f\n", ligne->prixUnitaireHT);
+                            printf("    Sous-total HT : %.2f\n\n", ligne->sousTotalHT);
+                        }
+                    }
+                }
+                return;
+            }
         }
+        printf("Erreur : le client n'existe pas\n");
     }
-
-    printf("Erreur : le client n'existe pas\n");
 }
-
-
-
-
-
-
-
