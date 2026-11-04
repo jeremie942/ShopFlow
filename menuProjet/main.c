@@ -27,6 +27,7 @@
 #include "statistique.h"
 #include "initialisation.h"
 
+
 /* --------------------------------------------------------------------------
  * Lecture d'un choix au clavier (version simple, suffisant pour demarrer).
  * A remplacer plus tard par une saisie securisee (module utils.c).
