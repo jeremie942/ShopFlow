@@ -18,5 +18,7 @@ add_executable(ShopFlow
         menuProjet/produit.h
         menuProjet/type.h
         menuProjet/statistique.c
-        menuProjet/statistique.h)
+        menuProjet/statistique.h
+        menuProjet/historique.c
+        menuProjet/historique.h)
 

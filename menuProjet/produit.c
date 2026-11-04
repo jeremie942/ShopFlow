@@ -4,6 +4,7 @@
 #include "type.h"
 #include <string.h>
 #include <ctype.h>
+#include "historique.h"
 
 void ajouterProduit(Boutique *bout) {
     if (bout->capaciteProduits <= bout->nbProduits) {
@@ -61,6 +62,9 @@ void ajouterProduit(Boutique *bout) {
         bout->produits[bout->nbProduits].actif = act;
         bout->nbProduits++;
 
+    char description[100];
+    snprintf(description, sizeof(description), "Reference: %s Nom: %s", bout->produits[bout->nbProduits-1].reference, bout->produits[bout->nbProduits-1].designation);
+    ajouterOperation(bout, "Ajout d'un produit", description);
 }
 
 
@@ -97,6 +101,10 @@ void modifierProduit(Boutique *bout) {
     scanf(" %d", &bout->produits[index].sueilAlerte);
 
     printf("[+] Produit modifie avec succes !\n");
+
+    char description[100];
+    snprintf(description, sizeof(description), "Reference: %s Nom: %s", bout->produits[bout->nbProduits-1].reference, bout->produits[bout->nbProduits-1].designation);
+    ajouterOperation(bout, "Modification d'un produit", description);
 }
 
 void afficherCatalogue(Boutique *bout) {
@@ -158,7 +166,9 @@ void supprimerProduit(Boutique *bout) {
 
     for (int i = 0; i < bout->nbProduits; i++) {
         if (strcmp(bout->produits[i].reference,ref) == 0) {
-
+            char description[100];
+            snprintf(description, sizeof(description), "Reference: %s Nom: %s", bout->produits[i].reference, bout->produits[i].designation);
+            ajouterOperation(bout, "Supression d'un produit", description);
             for (int j = i; j < bout->nbProduits - 1; j++) {
                 bout->produits[j] = bout->produits[j + 1];
             }

@@ -23,8 +23,10 @@
 #include "client.h"
 #include "produit.h"
 #include "commandes.h"
+#include "historique.h"
 #include "statistique.h"
 #include "initialisation.h"
+
 
 /* --------------------------------------------------------------------------
  * Lecture d'un choix au clavier (version simple, suffisant pour demarrer).
@@ -145,6 +147,24 @@ static void menuStatistiques(Boutique *b)
     } while (choix != 0);
 }
 
+static void menuHistorique(Boutique *b)
+{
+    int choix;
+    do
+    {
+        printf("\n===== Historique =====\n");
+        printf("  1. Afficher l'historique\n");
+        printf("  0. Retour au menu principal\n");
+        choix = lireChoix();
+        switch (choix)
+        {
+        case 1: afficherHistorique(b); break;
+        case 0:                            break;
+        default: printf("  [!] Choix invalide.\n"); break;
+        }
+    } while (choix != 0);
+}
+
 /* ==========================================================================
  * PROGRAMME PRINCIPAL
  * ========================================================================== */
@@ -165,6 +185,7 @@ int main(void)
         printf("  2. Gestion des clients\n");
         printf("  3. Gestion des commandes\n");
         printf("  4. Statistiques\n");
+        printf("  5. Historique des actions\n");
         printf("  0. Quitter\n");
         choix = lireChoix();
 
@@ -174,6 +195,7 @@ int main(void)
             case 2: menuClients(&b);      break;
             case 3: menuCommandes(&b);    break;
             case 4: menuStatistiques(&b); break;
+            case 5: menuHistorique(&b);   break;
             case 0: printf("\n  Au revoir !\n"); break;
             default: printf("  [!] Choix invalide.\n"); break;
         }

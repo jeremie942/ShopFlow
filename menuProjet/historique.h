@@ -1,7 +1,6 @@
 
 #ifndef SHOPFLOW_HISTORIQUE_H
 #define SHOPFLOW_HISTORIQUE_H
-
 #include "type.h"
 
 void initHistorique(Boutique *b);

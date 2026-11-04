@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "type.h"
+#include "historique.h"
 #include "produit.h"
 #include "client.h"
 #include "statistique.h"
@@ -251,13 +252,5 @@ void afficherBoutique(Boutique *b)
     printf("Numero suivant    : %d\n", b->numeroSuivant);
     printf("ID suivant client : %d\n", b->idClientSuivant);
     printf("=====================================\n");
-
-}
-
-void main(void) {
-    Boutique b;
-    initialiserDonneesTest(&b);
-    afficherBoutique(&b);
-    rechercheMultiCriteres(&b);
 
 }
