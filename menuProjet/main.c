@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include "type.h"
 #include "commandes.h"
+#include "statistique.h"
 #include "initialisation.h"
 
 /* --------------------------------------------------------------------------
@@ -54,9 +55,6 @@ void ajouterClient2(void)       { printf("  [STUB] ajouterClient - a implementer
 void modifierClient2(void)      { printf("  [STUB] modifierClient - a implementer dans client.c\n"); }
 void supprimerClient2(void)     { printf("  [STUB] supprimerClient - a implementer dans client.c\n"); }
 void afficherListeClients2(void){ printf("  [STUB] afficherListeClients - a implementer dans client.c\n"); }
-
-/* --- Module STATISTIQUES -------------------------------------------------- */
-void afficherChiffreAffaires(void) { printf("  [STUB] afficherChiffreAffaires - a implementer dans statistique.c\n"); }
 
 /* ==========================================================================
  * SOUS-MENUS : un seul motif a retenir, applique 4 fois.
@@ -134,19 +132,25 @@ static void menuCommandes(Boutique *b)
     } while (choix != 0);
 }
 
-static void menuStatistiques(void)
+static void menuStatistiques(Boutique *b)
 {
     int choix;
     do
     {
         printf("\n===== STATISTIQUES =====\n");
         printf("  1. Chiffre d'affaires global\n");
+        printf("  2. Palmares des produits \n");
+        printf("  3. Palmares des clients\n");
+        printf("  4. Verification des stocks\n");
         printf("  0. Retour au menu principal\n");
         choix = lireChoix();
 
         switch (choix)
         {
-            case 1: afficherChiffreAffaires(); break;
+            case 1: chiffreDAfaire(b); break;
+            case 2: palmaresProduits(b); break;
+            case 3: palmaresClients(b); break;
+            case 4: alerteStock(b); break;
             case 0:                            break;
             default: printf("  [!] Choix invalide.\n"); break;
         }
@@ -181,7 +185,7 @@ int main(void)
             case 1: menuProduits();     break;
             case 2: menuClients();      break;
             case 3: menuCommandes(&b);    break;
-            case 4: menuStatistiques(); break;
+            case 4: menuStatistiques(&b); break;
             case 0: printf("\n  Au revoir !\n"); break;
             default: printf("  [!] Choix invalide.\n"); break;
         }

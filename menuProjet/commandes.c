@@ -222,21 +222,35 @@ void afficherCommande(Boutique *b) {
 void annulerCommande(Boutique *b, int num_commande) {
     int id = num_commande / 100 - 1;
     int commande = num_commande % 100 - 1;
-    Commande *cmd = b->clients[id].commandes;
+    Commande *cmd = &b->clients[id].commandes[commande];
+
     if (strcmp(cmd->statut, "EN_COURS") == 0) {
-        if (cmd->nbLignes > 0) {
-            for (int i=0; i < cmd->nbLignes; i++) {
-                for (int j=0; j < b->nbProduits; j++) {
-                    if (strcmp(b->produits[j].designation, cmd->lignes[i].designation) == 0) {
-                        b->produits[j].quantiteStock += cmd->lignes[i].quantite;
-                        break;
-                    }
+        for (int i = 0; i < cmd->nbLignes; i++) {
+            for (int j = 0; j < b->nbProduits; j++) {
+                if (strcmp(b->produits[j].designation,
+                           cmd->lignes[i].designation) == 0) {
+                    b->produits[j].quantiteStock +=
+                        cmd->lignes[i].quantite;
+                    break;
                 }
             }
-            strcpy(cmd->statut, "ANNULEE");
-            printf("Votre commande a bien ete annulee");
         }
-    } else {
-        printf("La commande n'existe pas");
+        cmd->montantBrutHT = 0;
+        cmd->tauxRemise = 0;
+        cmd->montantRemise = 0;
+        cmd->montantHT = 0;
+        cmd->montantTVA = 0;
+        cmd->montantTTC = 0;
+        cmd->fraisPort = 0;
+        free(cmd->lignes);
+        cmd->lignes = NULL;
+        cmd->nbLignes = 0;
+        cmd->capaciteLignes = 0;
+        strcpy(cmd->statut, "ANNULEE");
+        printf("Votre commande a bien ete annulee\n");
+    }
+    else
+    {
+        printf("Cette commande ne peut pas etre annulee\n");
     }
 }

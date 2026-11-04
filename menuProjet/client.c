@@ -132,7 +132,6 @@ void afficherListe (Boutique *boutique) {
     }
 }
 
-
 void afficherClient (Boutique *boutique) {
     int id;
     printf("Id du client a afficher : ");

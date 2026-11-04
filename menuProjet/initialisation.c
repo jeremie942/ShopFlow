@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "type.h"
 #include "produit.h"
-#include "commandes.h"
 #include "client.h"
+#include "statistique.h"
 
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
@@ -59,8 +59,65 @@ void initialiserDonneesTest(Boutique *b) {
     };
     for (int j = 0;j < 6; j++)
         b->clients[b->nbClients++] = modelo[j];
+    //On ajoute manuellement deux commandes au premier client pour les tests
+    /* ===== Commandes de test pour le client 1 ===== */
+    Client *c = &b->clients[0];
+    c->capaciteCommandes = 5;
+    c->nbCommandes = 2;
+    c->commandes = malloc(sizeof(Commande) * c->capaciteCommandes);
+    /* ----- Commande 101 ----- */
+    c->commandes[0].numero = 101;
+    c->commandes[0].idClient = 1;
+    c->commandes[0].dateCommande.jour = 1;
+    c->commandes[0].dateCommande.mois = 11;
+    c->commandes[0].dateCommande.annee = 2026;
+    strcpy(c->commandes[0].statut, "EN_COURS");
+    c->commandes[0].nbLignes = 1;
+    c->commandes[0].capaciteLignes = 5;
+    c->commandes[0].lignes = malloc(sizeof(LigneCommande) * 5);
+    strcpy(c->commandes[0].lignes[0].refProduit, "PRD-0001");
+    strcpy(c->commandes[0].lignes[0].designation, "Clavier mecanique");
+    c->commandes[0].lignes[0].quantite = 1;
+    c->commandes[0].lignes[0].prixUnitaireHT = 79.90;
+    c->commandes[0].lignes[0].sousTotalHT = 79.90;
+    c->commandes[0].montantBrutHT = 79.90;
+    c->commandes[0].tauxRemise = 0;
+    c->commandes[0].montantRemise = 0;
+    c->commandes[0].montantHT = 79.90;
+    c->commandes[0].montantTVA = 15.98;
+    c->commandes[0].fraisPort = 0;
+    c->commandes[0].montantTTC = 95.88;
+    c->commandes[0].adresseLivraison = c->adresse;
+    /* ----- Commande 102 ----- */
+    c->commandes[1].numero = 102;
+    c->commandes[1].idClient = 1;
+    c->commandes[1].dateCommande.jour = 2;
+    c->commandes[1].dateCommande.mois = 11;
+    c->commandes[1].dateCommande.annee = 2026;
+    strcpy(c->commandes[1].statut, "EXPEDIEE");
+    c->commandes[1].nbLignes = 2;
+    c->commandes[1].capaciteLignes = 5;
+    c->commandes[1].lignes = malloc(sizeof(LigneCommande) * 5);
+    strcpy(c->commandes[1].lignes[0].refProduit, "PRD-0002");
+    strcpy(c->commandes[1].lignes[0].designation, "Souris sans fil");
+    c->commandes[1].lignes[0].quantite = 2;
+    c->commandes[1].lignes[0].prixUnitaireHT = 24.50;
+    c->commandes[1].lignes[0].sousTotalHT = 49.00;
+    strcpy(c->commandes[1].lignes[1].refProduit, "PRD-0006");
+    strcpy(c->commandes[1].lignes[1].designation, "Cable HDMI 2 m");
+    c->commandes[1].lignes[1].quantite = 3;
+    c->commandes[1].lignes[1].prixUnitaireHT = 9.90;
+    c->commandes[1].lignes[1].sousTotalHT = 29.70;
+    c->commandes[1].montantBrutHT = 78.70;
+    c->commandes[1].tauxRemise = 0;
+    c->commandes[1].montantRemise = 0;
+    c->commandes[1].montantHT = 78.70;
+    c->commandes[1].montantTVA = 15.74;
+    c->commandes[1].fraisPort = 0;
+    c->commandes[1].montantTTC = 94.44;
+    c->commandes[1].adresseLivraison = c->adresse;
+    }
 
-}
 /* Liberation complete : une seule fuite memoire est sanctionnee */
 void detruireBoutique(Boutique *b)
 {
@@ -196,4 +253,3 @@ void afficherBoutique(Boutique *b)
     printf("=====================================\n");
 
 }
-
