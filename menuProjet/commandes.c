@@ -5,6 +5,7 @@
 #include <time.h>
 #include <string.h>
 
+
 void ajouterLigne(Boutique *b, int num_commande) {
     int client = num_commande / 100 - 1;
     int commande = num_commande % 100 - 1;
