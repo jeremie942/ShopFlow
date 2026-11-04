@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "type.h"
+#include "client.h"
 #include "produit.h"
 #include "commandes.h"
 #include "statistique.h"
@@ -39,18 +40,6 @@ static int lireChoix(void)
     }
     return choix;
 }
-
-/* ==========================================================================
- * STUBS : affichent un message pour PROUVER que l'appel arrive.
- * A REMPLACER par les vraies fonctions des modules au fil des seances.
- * ========================================================================== */
-
-
-/* --- Module CLIENTS ------------------------------------------------------- */
-void ajouterClient2(void)       { printf("  [STUB] ajouterClient - a implementer dans client.c\n"); }
-void modifierClient2(void)      { printf("  [STUB] modifierClient - a implementer dans client.c\n"); }
-void supprimerClient2(void)     { printf("  [STUB] supprimerClient - a implementer dans client.c\n"); }
-void afficherListeClients2(void){ printf("  [STUB] afficherListeClients - a implementer dans client.c\n"); }
 
 /* ==========================================================================
  * SOUS-MENUS : un seul motif a retenir, applique 4 fois.
@@ -83,7 +72,7 @@ static void menuProduits(Boutique *b)
     } while (choix != 0);
 }
 
-static void menuClients(void)
+static void menuClients(Boutique *b)
 {
     int choix;
     do
@@ -93,15 +82,17 @@ static void menuClients(void)
         printf("  2. Modifier un client\n");
         printf("  3. Supprimer un client\n");
         printf("  4. Afficher la liste des clients\n");
+        printf("  5. Affichage d'un client \n");
         printf("  0. Retour au menu principal\n");
         choix = lireChoix();
 
         switch (choix)
         {
-            case 1: ajouterClient2();        break;
-            case 2: modifierClient2();       break;
-            case 3: supprimerClient2();      break;
-            case 4: afficherListeClients2(); break;
+            case 1: ajouterClient(b);        break;
+            case 2: mettreaJourClient(b);       break;
+            case 3: supprimerClient(b);      break;
+            case 4: afficherListe(b); break;
+            case 5: afficherClient(b); break;
             case 0:                         break;
             default: printf("  [!] Choix invalide.\n"); break;
         }
@@ -180,7 +171,7 @@ int main(void)
         switch (choix)
         {
             case 1: menuProduits(&b);     break;
-            case 2: menuClients();      break;
+            case 2: menuClients(&b);      break;
             case 3: menuCommandes(&b);    break;
             case 4: menuStatistiques(&b); break;
             case 0: printf("\n  Au revoir !\n"); break;
