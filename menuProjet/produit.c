@@ -180,3 +180,71 @@ void supprimerProduit(Boutique *bout) {
     }
 }
 
+void rechercheMultiCriteres(Boutique *bout) {
+    //A preciser que pour un nombre restrain de produit la fonction peut sembler inutile mais pour un nombre consequent le filtrage est tout de suite très utile
+    //a noté egalement que l'on ne demande ni la designation ni la référence car on recherche des produits que l'on ne connait pas et il n'y a pas d'intéret de recherche en multi critère si l'on connait la designation ou la reference
+    char catFiltre[30];
+    float prixMin, prixMax;
+    int actifFiltre;
+    int trouve = 0;
+    int c;
+
+    printf("\n--- RECHERCHE MULTI-CRITERES ---\n");
+
+    //on demande pour chaque filtre possible ce qu'on applique
+    printf("Categorie (laisser vide pour ignorer) : ");
+    if (fgets(catFiltre, sizeof(catFiltre), stdin) != NULL) {
+        catFiltre[strcspn(catFiltre, "\n")] = '\0';
+    }
+    do {
+        printf("Prix minimum (-1 pour ignorer) : ");
+        scanf("%f", &prixMin);
+
+        printf("Prix maximum (-1 pour ignorer) : ");
+        scanf("%f", &prixMax);
+
+        // Si les deux sont actifs (différents de -1) ET que le max est plus petit que le min
+        if (prixMin != -1 && prixMax != -1 && prixMax < prixMin) {
+            printf("[!] Erreur : Le prix maximum est inferieur au prix minimum. Veuillez ressaisir les prix.\n\n");
+        }
+    } while (prixMin != -1 && prixMax != -1 && prixMax < prixMin);
+
+    printf("Produit actif ? (1: Oui, 0: Non, 2: Ignorer ce critere) : ");
+    scanf("%d", &actifFiltre);
+
+    printf("\n--- RESULTATS DE LA RECHERCHE ---\n");
+    for (int i = 0; i < bout->nbProduits; i++) {
+        Produit *p = &bout->produits[i];
+        int correspond = 1;
+        // on regarde si l'utilisateur a un catégorie en filtre
+        if (strlen(catFiltre) > 0) {
+            if (strcasecmp(p->categorie, catFiltre) != 0) {
+                correspond = 0;
+            }
+        }
+        //on regarde si le prix du produit est bien inferieur au prix minimum rentré
+        if (prixMin >= 0 && p->prixUnitaireHT < prixMin) {
+            correspond = 0;
+        }
+        //Meme chose pour le prix maximum
+        if (prixMax > prixMin && p->prixUnitaireHT > prixMax) {
+            correspond = 0;
+        }
+        //on regarde si il a la meme activité que le filtre
+        if (actifFiltre == 0 || actifFiltre == 1) {
+            if (p->actif != actifFiltre) {
+                correspond = 0;
+            }
+        }
+        //Enfin on verifie si le produit correspond a tout les critère ,Si oui on affiche le produit
+        if (correspond) {
+            printf("- [%s] %s |\n Categorie: %s |\n Prix: %.2f € |\n Stock: %d\n",
+                   p->reference, p->designation, p->categorie, p->prixUnitaireHT, p->quantiteStock);
+            trouve = 1;
+        }
+    }
+    //Sinon on dis que rien ne correspond
+    if (!trouve) {
+        printf("Aucun produit ne correspond a ces criteres de recherche.\n");
+    }
+}

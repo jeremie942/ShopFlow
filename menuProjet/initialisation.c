@@ -8,7 +8,6 @@
 #include "client.h"
 #include "statistique.h"
 
-
 void initialiserDonneesTest(Boutique *b) {
     /* 1. Catalogue : allocation dynamique de 10 emplacements */
     strcpy(b->nom,"ShopFlow");
