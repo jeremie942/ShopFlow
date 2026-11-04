@@ -169,3 +169,4 @@ void supprimerProduit(Boutique *bout) {
         }
     }
 }
+

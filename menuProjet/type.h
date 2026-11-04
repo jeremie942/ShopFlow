@@ -15,6 +15,18 @@ typedef struct {
 } Adresse;
 
 typedef struct {
+    char type[30];
+    char description[100];
+    Date date;
+} Operation;
+
+typedef struct {
+    Operation *operations;
+    int nbOperations;
+    int capaciteOperations;
+} Historique;
+
+typedef struct {
     char reference[12];
     char designation[60];
     char categorie[30];
@@ -74,6 +86,7 @@ typedef struct {
     int capaciteClients;
     int numeroSuivant;
     int idClientSuivant;
+    Historique historique;
 } Boutique;
 
-#endif //SHOPFLOW_TYPE_H
+#endif
