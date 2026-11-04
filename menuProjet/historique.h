@@ -10,3 +10,4 @@ void afficherHistorique(Boutique *b);
 void libererHistorique(Boutique *b);
 
 #endif //SHOPFLOW_HISTORIQUE_H
+
