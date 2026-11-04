@@ -2,6 +2,7 @@
 #define SHOPFLOW_COMMANDES_H
 #include "commandes.c"
 #include "type.h"
+#include "produit.h"
 
 void ajouterLigne(Boutique *b, int num_commande);
 void supprimerLigne(Boutique *b, int num_commande, char des[60]);
