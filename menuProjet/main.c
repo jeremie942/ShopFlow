@@ -58,6 +58,8 @@ static void menuProduits(Boutique *b)
         printf("  2. Modifier un produit\n");
         printf("  3. Supprimer un produit\n");
         printf("  4. Afficher le catalogue\n");
+        printf("  5. Recherche produit\n");
+        printf("  6. Recherche multicritere\n");
         printf("  0. Retour au menu principal\n");
         choix = lireChoix();
 
@@ -68,6 +70,7 @@ static void menuProduits(Boutique *b)
             case 3: supprimerProduit(b);  break;
             case 4: afficherCatalogue(b); break;
             case 5: searchProduit(b);     break;
+            case 6: rechercheMultiCriteres(b); break;
             case 0:                       break; /* retour automatique */
             default: printf("  [!] Choix invalide.\n"); break;
         }
