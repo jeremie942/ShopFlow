@@ -5,4 +5,6 @@
 void supprimerProduit(Boutique *bout);
 void ajouterProduit(Boutique *bout);
 void modifierProduit(Boutique *bout);
+void searchProduit(Boutique *bout);
+void afficherCatalogue(Boutique *bout);
 #endif //SHOPFLOW_PRODUIT_H
